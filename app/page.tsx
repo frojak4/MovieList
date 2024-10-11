@@ -11,10 +11,10 @@ export default async function Home() {
     <div className="w-4/6 mx-auto flex flex-col">
       <div className="flex flex-wrap">
       {data.map((movie: MovieCardProps, i: number) => {
-        return <MovieCard movie={movie} key={i} />
+        return <MovieCard movie={movie} index={i} key={i} />
       })}
       </div>
-      <LoadMore />
+      <LoadMore/>
     </div>
   );
 }
