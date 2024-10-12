@@ -27,12 +27,12 @@ const MovieCard = ({movie, index}: {index: number, movie: MovieCardProps}) => {
       ease: "easeInOut",
       duration: 0.5
     }}
-    className="p-8 flex-col mx-auto items-center relative max-w-64">
+    className="p-8 flex-col mx-auto items-center relative max-w-56">
         <Image  
         src={url + movie.poster_path} 
         alt={movie.title}
         quality={20}
-        width={200}
+        width={250}
         height={200}
         priority={index < 10}
         />

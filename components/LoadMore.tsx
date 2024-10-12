@@ -4,25 +4,41 @@ import React, { useEffect, useState } from 'react'
 import {useInView} from 'react-intersection-observer'
 import MovieCard, { MovieCardProps } from './MovieCard'
 import {CircleLoader} from 'react-spinners'
+import axios from 'axios'
 const LoadMore = () => {
 
     const { ref, inView } = useInView()
     const [index, setIndex] = useState(2);
     const [data, setData] = useState<MovieCardProps[]>([])
-    const [fetchedAll, setFetchedAll] = useState<boolean>()
+    const [restOfData, setRestOfData] = useState<MovieCardProps[]>([])
 
     useEffect(() => {
 
         if (inView){
-            fetchMovies(index)
-            .then((res) => 
-            setData([...data, ...res]))
-            .catch((err) => console.log(err))
-            console.log('in view')
+          if (restOfData.length === 0){
+          fetchMovies(index).then((res) => {
+            const firstHalf = res.slice(0, 10)
+            const secondHalf = res.slice(10, 20)
+            console.log(res)
+            setData([...data, ...firstHalf])
+            setRestOfData([secondHalf]);
+          })
+          
             setIndex((prev) => prev + 1);
+          } else {
+            loadEvenMore();
+          }
+        
         }
     }, [inView])
+
+
     
+    const loadEvenMore = () => {
+      setData([...data, ...restOfData]);
+      setRestOfData([]);
+    }
+
   return (
     
     <div>
@@ -31,8 +47,9 @@ const LoadMore = () => {
         return <MovieCard movie={movie} index={i} key={i} />
       })}
       </div>
-
-        <CircleLoader ref={ref} />
+        <div ref={ref} className='mx-auto text-white'>
+        <CircleLoader className="text-white" />
+        </div>
     </div>
   )
 }

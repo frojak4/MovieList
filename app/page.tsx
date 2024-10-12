@@ -6,7 +6,7 @@ import LoadMore from '@/components/LoadMore';
 export default async function Home() {
 
   const data = await fetchMovies(1);
-  console.log(data)
+  console.log(data.length)
   return (
     <div className="w-4/6 mx-auto flex flex-col">
       <div className="flex flex-wrap">
